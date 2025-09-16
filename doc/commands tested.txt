@@ -1,0 +1,52 @@
+rpicam-still --width 1920 --height 1080   --sharpness 1.5 --contrast 1.2 --saturation 1.2 -o photo_tuned.jpg
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 20000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 -t 0 -o 1080p_tuned.mp4
+
+
+rpicam-hello --width 1920 --height 1080 --framerate 30 --sharpness 1.5 --contrast 1.2 --saturation 1.2 -t 0
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 15000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --listen -o tcp://0.0.0.0:8554
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 15000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --listen -t 0 -o tcp://0.0.0.0:8554
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline -t 0 -o - | ffmpeg -re -i - -f mpegts udp://192.168.68.54:1234
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 -t 0 -o - | ffmpeg -re -f h264 -i - -c:v copy -f rtsp -rtsp_transport tcp rtsp://0.0.0.0:8554/live.sdp
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format mpegts -t 0 -o udp://192.168.68.54:1234
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 -t 0 -o - | ffmpeg -re -f h264 -i - -c:v copy -f rtsp -rtsp_transport tcp rtsp://0.0.0.0:8554/live.sdp
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format rtsp -t 0 -o rtsp://0.0.0.0:8554/live.sdp
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format h264 -t 0 -o - | ffmpeg -re -f h264 -i - -c:v copy -f rtsp -rtsp_transport tcp rtsp://0.0.0.0:8554/live.sdp
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 \
+  --sharpness 1.5 --contrast 1.2 --saturation 1.2 \
+  --inline --intra 30 --libav-format h264 -t 0 -o - | \
+ffmpeg -re -f h264 -i - -c:v copy -f rtsp -rtsp_transport tcp -rtsp_flags listen rtsp://0.0.0.0:8554/live.sdp
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format mpegts -t 0 -o udp://192.168.68.54:1234
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format mpegts -t 0 -o udp://192.168.68.54:1234
+
+ffmpeg -i udp://@:1234 -fflags nobuffer -flags low_delay -probesize 32 -analyzeduration 0 -c copy -f matroska test.mkv
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --libav-format h264 -t 0 -o - | ffmpeg -re -f h264 -i - -c:v copy -f rtsp -rtsp_transport tcp -rtsp_flags listen rtsp://0.0.0.0:8554/live.sdp
+
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --listen -t 0 -o tcp://0.0.0.0:8554
+
+
+ffmpeg -fflags +genpts -f h264 -r 30 -i tcp://192.168.68.63:8554 -c copy -movflags +faststart out.mp4
+
+rpicam-vid --width 1920 --height 1080 --framerate 30 --bitrate 12000000 --codec h264 --sharpness 1.5 --contrast 1.2 --saturation 1.2 --inline --intra 30 --listen -t 0 -o tcp://0.0.0.0:8554
+
+ffmpeg -fflags +genpts -f h264 -r 30 -i tcp://192.168.68.63:8554 -c copy -movflags +faststart out2.mp4
